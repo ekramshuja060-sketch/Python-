@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKRAM - اپ کامل موبایل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7E57C2;
+            --secondary: #667eea;
+            --ai: #10A37F;
+            --books: #8B4513;
+            --instagram: #E4405F;
+            --whatsapp: #25D366;
+            --youtube: #FF0000;
+            --pubg: #FFA500;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* صفحه لاگین */
+        .login-page {
+            background: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .input-group input {
+            padding: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .social-btn.instagram { background: var(--instagram); }
+        .social-btn.whatsapp { background: var(--whatsapp); }
+        .social-btn.telegram { background: var(--telegram); }
+
+        /* صفحات اصلی */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+
+        /* هدر */
+        .app-header {
+            background: white;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e0e0e0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-icons i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        /* استوری */
+        .stories-section {
+            background: white;
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .stories-container {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .story {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .story-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            border: 3px solid var(--instagram);
+        }
+
+        /* پست */
+        .feed {
+            padding: 1rem;
+        }
+
+        .post {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .post-header {
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .post-actions {
+            padding: 1rem;
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .post-actions i {
+            font-size: 1.5rem;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .post-actions i.active {
+            color: var(--instagram);
+        }
+
+        .post-likes {
+            padding: 0 1rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .post-caption {
+            padding: 0 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .add-comment {
+            padding: 1rem;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .comment-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        /* بخش هوش مصنوعی */
+        .ai-section {
+            background: white;
+            margin: 1rem;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .ai-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--ai);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .ai-chat {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            height: 200px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            border: 2px solid #e9ecef;
+        }
+
+        .message {
+            margin-bottom: 0.8rem;
+            padding: 0.8rem;
+            border-radius: 10px;
+            max-width: 85%;
+        }
+
+        .user-message {
+            background: var(--ai);
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: white;
+            color: #333;
+            border: 1px solid #e9ecef;
+        }
+
+        .ai-input-container {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .ai-input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #e9ecef;
+            border-radius: 25px;
+            font-size: 1rem;
+        }
+
+        .ai-send {
+            background: var(--ai);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            padding: 0 1.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        /* بخش مثنوی */
+        .masnavi-section {
+            background: white;
+            margin: 1rem;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .masnavi-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .masnavi-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--books);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .poem-card {
+            background: linear-gradient(135deg, #8B4513, #A0522D);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .poem-text {
+            font-size: 1.1rem;
+            line-height: 2;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .masnavi-controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .control-btn {
+            flex: 1;
+            background: var(--books);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* بخش درآمد */
+        .income-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin: 1rem;
+        }
+
+        .income-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .income-card i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .income-card.instagram i { color: var(--instagram); }
+        .income-card.whatsapp i { color: var(--whatsapp); }
+        .income-card.youtube i { color: var(--youtube); }
+
+        .income-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 0.5rem 0;
+        }
+
+        .earn-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 0.5rem;
+        }
+
+        /* بخش بازی */
+        .game-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .game-card.pubg {
+            background: linear-gradient(45deg, var(--pubg), #FF6B35);
+            color: white;
+        }
+
+        .game-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .play-btn {
+            background: white;
+            color: var(--pubg);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        /* نوار پایین */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 0.8rem;
+            border-top: 1px solid #e0e0e0;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .nav-item.active i {
+            color: var(--primary);
+        }
+
+        .nav-label {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- صفحه لاگین -->
+    <div class="login-page" id="loginPage">
+        <div class="logo">EKRAM</div>
+        <form class="login-form" id="loginForm">
+            <div class="input-group">
+                <label>ایمیل</label>
+                <input type="email" id="email" placeholder="example@gmail.com" required>
+            </div>
+            <div class="input-group">
+                <label>رمز عبور</label>
+                <input type="password" id="password" placeholder="••••••••" required>
+            </div>
+            <button type="submit" class="login-btn">ورود</button>
+        </form>
+
+        <div class="social-login">
+            <div class="social-btn instagram" onclick="socialLogin('instagram')">
+                <i class="fab fa-instagram"></i>
+            </div>
+            <div class="social-btn whatsapp" onclick="socialLogin('whatsapp')">
+                <i class="fab fa-whatsapp"></i>
+            </div>
+            <div class="social-btn telegram" onclick="socialLogin('telegram')">
+                <i class="fab fa-telegram"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه اصلی (شبکه اجتماعی) -->
+    <div class="page" id="mainPage">
+        <div class="app-header">
+            <div class="logo" style="font-size: 1.5rem;">EKRAM</div>
+            <div class="header-icons">
+                <i class="fas fa-plus-square"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-paper-plane"></i>
+            </div>
+        </div>
+
+        <div class="stories-section">
+            <div class="stories-container">
+                <div class="story">
+                    <div class="story-avatar">+</div>
+                    <div class="story-username">استوری شما</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">ع</div>
+                    <div class="story-username">علی</div>
+                </div>
+                <div class="story">
+                    <div class="story-avatar">م</div>
+                    <div class="story-username">مریم</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="feed">
+            <div class="post">
+                <div class="post-header">
+                    <div class="post-avatar">ع</div>
+                    <div class="post-user">ali_ahmadi</div>
+                </div>
+                <div class="post-image">
+                    طبیعت زیبا 🌲
+                </div>
+                <div class="post-actions">
+                    <i class="far fa-heart"></i>
+                    <i class="far fa-comment"></i>
+                    <i class="far fa-paper-plane"></i>
+                </div>
+                <div class="post-likes">۱,۲۳۴ پسندیدن</div>
+                <div class="post-caption">
+                    <strong>ali_ahmadi</strong> از گردش در طبیعت لذت ببرید! 🌳
+                </div>
+                <div class="add-comment">
+                    <input type="text" class="comment-input" placeholder="افزودن نظر...">
+                    <div class="post-comment-btn">ارسال</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه هوش مصنوعی و مثنوی -->
+    <div class="page" id="aiPage">
+        <div class="app-header">
+            <div class="logo" style="font-size: 1.5rem;">هوش مصنوعی</div>
+        </div>
+
+        <div class="ai-section">
+            <div class="ai-header">
+                <div class="ai-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div>
+                    <h3>دستیار هوشمند</h3>
+                    <p style="color: #666; font-size: 0.9rem;">پاسخ به سوالات شما</p>
+                </div>
+            </div>
+            
+            <div class="ai-chat" id="aiChat">
+                <div class="message bot-message">
+                    👋 سلام! من دستیار هوش مصنوعی شما هستم.
+                </div>
+            </div>
+            
+            <div class="ai-input-container">
+                <input type="text" class="ai-input" id="aiInput" placeholder="سوال خود را بپرسید...">
+                <button class="ai-send" onclick="sendAIMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="masnavi-section">
+            <div class="masnavi-header">
+                <div class="masnavi-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div>
+                    <h3>مثنوی معنوی</h3>
+                    <p style="color: #666; font-size: 0.9rem;">اشعار مولانا</p>
+                </div>
+            </div>
+            
+            <div class="poem-card">
+                <div class="poem-text" id="poemText">
+                    بشنو از نی چون حکایت می‌کند<br>از جدایی‌ها شکایت می‌کند
+                </div>
+            </div>
+            
+            <div class="masnavi-controls">
+                <button class="control-btn" onclick="previousPoem()">
+                    <i class="fas fa-arrow-right"></i> قبلی
+                </button>
+                <button class="control-btn" onclick="nextPoem()">
+                    بعدی <i class="fas fa-arrow-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه درآمد -->
+    <div class="page" id="incomePage">
+        <div class="app-header">
+            <div class="logo" style="font-size: 1.5rem;">درآمدزایی</div>
+        </div>
+
+        <div class="income-cards">
+            <div class="income-card instagram">
+                <i class="fab fa-instagram"></i>
+                <h3>اینستاگرام</h3>
+                <div class="income-amount">$۱۵۰</div>
+                <p>درآمد از لایک و فالوور</p>
+                <button class="earn-btn" onclick="openApp('instagram')">شروع درآمد</button>
+            </div>
+
+            <div class="income-card whatsapp">
+                <i class="fab fa-whatsapp"></i>
+                <h3>واتساپ</h3>
+                <div class="income-amount">$۲۰۰</div>
+                <p>ربات پیامرسان</p>
+                <button class="earn-btn" onclick="openApp('whatsapp')">شروع درآمد</button>
+            </div>
+
+            <div class="income-card youtube">
+                <i class="fab fa-youtube"></i>
+                <h3>یوتیوب</h3>
+                <div class="income-amount">$۳۰۰</div>
+                <p>درآمد از ویو</p>
+                <button class="earn-btn" onclick="openApp('youtube')">شروع درآمد</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحه بازی -->
+    <div class="page" id="gamesPage">
+        <div class="app-header">
+            <div class="logo" style="font-size: 1.5rem;">بازی‌ها</div>
+        </div>
+
+        <div class="game-card pubg">
+            <div class="game-icon">
+                <i class="fas fa-gamepad"></i>
+            </div>
+            <h3>PUBG Mobile</h3>
+            <p>بازی آنلاین بتل رویال</p>
+            <button class="play-btn" onclick="playGame('pubg')">شروع بازی</button>
+        </div>
+    </div>
+
+    <!-- نوار پایین -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showPage('main')">
+            <i class="fas fa-home"></i>
+            <div class="nav-label">خانه</div>
+        </div>
+        <div class="nav-item" onclick="showPage('ai')">
+            <i class="fas fa-robot"></i>
+            <div class="nav-label">هوش مصنوعی</div>
+        </div>
+        <div class="nav-item" onclick="showPage('income')">
+            <i class="fas fa-money-bill-wave"></i>
+            <div class="nav-label">درآمد</div>
+        </div>
+        <div class="nav-item" onclick="showPage('games')">
+            <i class="fas fa-gamepad"></i>
+            <div class="nav-label">بازی</div>
+        </div>
+    </div>
+
+    <script>
+        // سیستم لاگین
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            localStorage.setItem('user', email);
+            localStorage.setItem('loggedIn', 'true');
+            showPage('main');
+        });
+
+        // نمایش صفحات
+        function showPage(page) {
+            document.getElementById('loginPage').style.display = 'none';
+            document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+            
+            // آپدیت نوار پایین
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            if (page === 'main') {
+                document.getElementById('mainPage').style.display = 'block';
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (page === 'ai') {
+                document.getElementById('aiPage').style.display = 'block';
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
+            } else if (page === 'income') {
+                document.getElementById('incomePage').style.display = 'block';
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
+            } else if (page === 'games') {
+                document.getElementById('gamesPage').style.display = 'block';
+                document.querySelectorAll('.nav-item')[3].classList.add('active');
+            }
+        }
+
+        // اگر کاربر لاگین کرده
+        if (localStorage.getItem('loggedIn') === 'true') {
+            document.getElementById('loginPage').style.display = 'none';
+            showPage('main');
+        }
+
+        // سیستم لایک
+        document.querySelectorAll('.fa-heart').forEach(heart => {
+            heart.addEventListener('click', function() {
+                this.classList.toggle('far');
+                this.classList.toggle('fas');
+                this.classList.toggle('active');
+            });
+        });
+
+        // هوش مصنوعی
+        function sendAIMessage() {
+            const input = document.getElementById('aiInput');
+            const message = input.value.trim();
+            
+            if (message === '') return;
+            
+            addAIMessage(message, 'user');
+            input.value = '';
+            
+            setTimeout(() => {
+                let response = '';
+                
+                if (message.includes('برنامه') || message.includes('کدنویسی')) {
+                    response = "برای برنامه‌نویسی می‌توانم کمک کنم! چه زبانی مد نظر شماست؟";
+                } else if (message.includes('مثنوی') || message.includes('مولانا')) {
+                    response = "مثنوی معنوی مولانا یکی از بزرگترین آثار ادبیات فارسی است.";
+                } else {
+                    const responses = [
+                        "سوال جالبی پرسیدید!",
+                        "متوجه شدم. برای اطلاعات بیشتر راهنماییتان می‌کنم.",
+                        "پاسخ شما را آماده کرده‌ام."
+                    ];
+                    response = responses[Math.floor(Math.random() * responses.length)];
+                }
+                
+                addAIMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        function addAIMessage(text, sender) {
+            const chatContainer = document.getElementById('aiChat');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            messageDiv.textContent = text;
+            chatContainer.appendChild(messageDiv);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        // مثنوی مولوی
+        const poems = [
+            { text: "بشنو از نی چون حکایت می‌کند<br>از جدایی‌ها شکایت می‌کند" },
+            { text: "هر کسی کو دور ماند از اصل خویش<br>باز جوید روزگار وصل خویش" },
+            { text: "در نقاب خود چو می‌روند اهل دغل<br>پس نقاب خود برای چیست ای فضل" }
+        ];
+
+        let currentPoem = 0;
+
+        function updatePoem() {
+            document.getElementById('poemText').innerHTML = poems[currentPoem].text;
+        }
+
+        function nextPoem() {
+            currentPoem = (currentPoem + 1) % poems.length;
+            updatePoem();
+        }
+
+        function previousPoem() {
+            currentPoem = (currentPoem - 1 + poems.length) % poems.length;
+            updatePoem();
+        }
+
+        // سایر توابع
+        function openApp(appName) {
+            alert(`در حال انتقال به ${appName}...`);
+        }
+
+        function playGame(game) {
+            alert(`شروع بازی ${game.toUpperCase()}!`);
+        }
+
+        function socialLogin(provider) {
+            alert(`ورود با ${provider}...`);
+        }
+
+        // بارگذاری اولیه
+        updatePoem();
+        document.getElementById('aiInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') sendAIMessage();
+        });
+    </script>
+</body>
+</html>
